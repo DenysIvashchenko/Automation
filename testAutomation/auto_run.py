@@ -12,15 +12,10 @@ def find_server_dir(start: Path) -> Path:
 SERVER_DIR = find_server_dir(Path(__file__).resolve())
 ROOT_DIR = SERVER_DIR.parent
 
-print("ROOT_DIR =", ROOT_DIR)
-print("SERVER_DIR =", SERVER_DIR)
-print("package.json exists:", (SERVER_DIR / "package.json").exists())
-
 def run_test():
     result = subprocess.run(
         ["npm", "test"],
         cwd=SERVER_DIR,
-        shell=True,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

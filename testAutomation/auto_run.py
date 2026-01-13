@@ -2,12 +2,15 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-SERVER_DIR = ROOT_DIR 
+def find_server_dir(start: Path) -> Path:
+    for parent in start.parents:
+        candidate = parent / "server" / "package.json"
+        if candidate.exists():
+            return parent / "server"
+    raise RuntimeError("server/package.json not found")
 
-print("ROOT_DIR =", ROOT_DIR)
-print("SERVER_DIR =", SERVER_DIR)
-print("package.json exists:", (SERVER_DIR / "package.json").exists())
+SERVER_DIR = find_server_dir(Path(__file__).resolve())
+ROOT_DIR = SERVER_DIR.parent
 
 def run_test():
     result = subprocess.run(

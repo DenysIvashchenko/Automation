@@ -2,7 +2,7 @@ import asyncio
 from aiohttp import ClientSession
 
 URLS = [
-    "http://localhost:3000"
+    "http://server:3000"
 ]
 
 async def check(url, session):

@@ -11,6 +11,10 @@ app.get('/work', (req, res) => {
   res.status(200).send({server: "work", work:"port 3000"});
 });
 
+app.get('/work:id', (req, res) => {
+  res.status(200).send({server: "work", work:"port 3000"});
+});
+
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);

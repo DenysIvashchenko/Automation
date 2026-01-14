@@ -1,15 +1,24 @@
 from pathlib import Path
+import platform
 import subprocess
 import sys
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-SERVER_DIR = ROOT_DIR / "server"
+def find_server_dir(start: Path) -> Path:
+    for parent in start.parents:
+        candidate = parent / "server" / "package.json"
+        if candidate.exists():
+            return parent / "server"
+    raise RuntimeError("server/package.json not found")
+
+SERVER_DIR = find_server_dir(Path(__file__).resolve())
+ROOT_DIR = SERVER_DIR.parent
 
 def run_test():
+    npm = "npm.cmd" if platform.system() == "Windows" else "npm"
+
     result = subprocess.run(
-        ["npm", "test"],
+        [npm, "test"],
         cwd=SERVER_DIR,
-        shell=True,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

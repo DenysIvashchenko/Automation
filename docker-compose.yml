@@ -1,13 +1,15 @@
-version: "3.9"
-
 services:
   server:
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
 
   automation:
-    build: .
+    build:
+      context: ./testAutomation
+      dockerfile: Dockerfile
     depends_on:
       - server
     environment:

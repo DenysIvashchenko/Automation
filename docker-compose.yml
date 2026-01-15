@@ -1,0 +1,16 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  automation:
+    build:
+      context: ./testAutomation
+      dockerfile: Dockerfile
+    depends_on:
+      - server
+    environment:
+      BASE_URL: http://server:3000

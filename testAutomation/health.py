@@ -1,9 +1,13 @@
 import asyncio
+import os
 from aiohttp import ClientSession
+from dotenv import load_dotenv
 
-URLS = [
-    "http://localhost:3000"
-]
+load_dotenv()
+
+BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000")
+
+URLS = [f"{BASE_URL}"]
 
 async def check(url, session):
     try:
